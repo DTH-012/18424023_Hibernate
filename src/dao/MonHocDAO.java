@@ -48,4 +48,65 @@ public class MonHocDAO {
         }
         return mh;
     }
+    
+    public static boolean themMonhoc(Monhoc mh) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (layThongTinMonhoc(mh.getMaMh())!=null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(mh);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean capNhatThongTinMonhoc(Monhoc mh) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (layThongTinMonhoc(mh.getMaMh()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(mh);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean xoaSinhVien(String maMH) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Monhoc mh = layThongTinMonhoc(maMH);
+        if(mh==null){
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(mh);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 }
