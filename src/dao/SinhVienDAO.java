@@ -44,4 +44,65 @@ public class SinhVienDAO {
         }
         return sv;
     }
+    
+    public static boolean themSinhvien(Sinhvien sv) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (layThongTinSinhvien(sv.getMssv())!=null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.save(sv);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean capNhatThongTinSinhvien(Sinhvien sv) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        if (layThongTinSinhvien(sv.getMssv()) == null) {
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(sv);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
+    
+    public static boolean xoaSinhvien(String maSinhvien) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Sinhvien sv = layThongTinSinhvien(maSinhvien);
+        if(sv==null){
+            return false;
+        }
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(sv);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return true;
+    }
 }
