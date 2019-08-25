@@ -11,5 +11,6 @@
     <mapping resource="pojo/Sinhvien.hbm.xml"/>
     <mapping resource="pojo/Diem.hbm.xml"/>
     <mapping resource="pojo/Monhoc.hbm.xml"/>
+    <mapping resource="pojo/Account.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
