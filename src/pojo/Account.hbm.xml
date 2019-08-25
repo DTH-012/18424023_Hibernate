@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 25, 2019 5:53:18 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojo.Account" table="account" catalog="quanlysinhvien" optimistic-lock="version">
+        <id name="username" type="string">
+            <column name="Username" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="Password" length="45" />
+        </property>
+        <property name="level" type="java.lang.Integer">
+            <column name="Level" />
+        </property>
+    </class>
+</hibernate-mapping>
