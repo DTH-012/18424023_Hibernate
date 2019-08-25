@@ -18,5 +18,34 @@ import util.HibernateUtil;
  * @author Arsenal
  */
 public class MonHocDAO {
+    public static List<Monhoc> layDanhSachMonhoc() {
+        List<Monhoc> ds = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String hql = "select mh from Monhoc mh";
+            Query query = session.createQuery(hql);
+            ds = query.list();
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return ds;
+    }
     
+    public static Monhoc layThongTinMonhoc(String maMH) {
+        Monhoc mh = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            mh = (Monhoc) session.get(Monhoc.class,
+            maMH);
+        } catch (HibernateException ex) {
+            //Log the exception
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return mh;
+    }
 }
